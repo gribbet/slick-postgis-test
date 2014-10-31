@@ -1,6 +1,6 @@
 package airphrame.query
 
 import airphrame.model.Project
-import airphrame.table.Projects
+import airphrame.table.ProjectTable
 
-object projects extends ModelTableQuery[Project, Projects](new Projects(_))
+object Projects extends ModelTableQuery[Project, ProjectTable](new ProjectTable(_))

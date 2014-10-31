@@ -1,26 +1,39 @@
 package airphrame
 
 import airphrame.model.{Project, User}
-import airphrame.query.{projects, users}
-
-import scala.slick.driver.PostgresDriver.simple._
+import airphrame.query.{Projects, Users}
+import airphrame.slick.Driver.simple._
+import com.vividsolutions.jts.geom._
+import com.vividsolutions.jts.geom.impl.CoordinateArraySequence
 
 object Main extends App {
-  val db = Database.forURL(
+  lazy val db = Database.forURL(
     url = "jdbc:postgresql://test.c7ssmrrxqzim.us-west-1.rds.amazonaws.com:5432",
     user = "test",
-    password ="testtest",
+    password = "testtest",
     driver = "org.postgresql.Driver")
 
   db.withSession { implicit session =>
-    (users.ddl ++ projects.ddl).create
-    
-    val john = users.save(User(name = "John Doe"))
-    val project = projects.save(Project(userId = john.id))
+    (Users.ddl ++ Projects.ddl).create
+
+    val john = Users.save(User(name = "John Doe"))
+    val factory = new GeometryFactory(new PrecisionModel(), 4326)
+    val geometry = new MultiPolygon(Array(
+      new Polygon(
+        new LinearRing(
+          new CoordinateArraySequence(Array(
+            new Coordinate(-122.3, 37.0),
+            new Coordinate(-122.2, 37.1),
+            new Coordinate(-122.1, 37.0),
+            new Coordinate(-122.3, 37.0))), factory),
+        Array[LinearRing](), factory)), factory)
+    val project = Projects.save(Project(userId = john.id, geometry = geometry))
     println(project)
 
-    println(users.save(john.copy(name = "Jon Doe")))
+    println(Projects.filter(_.id === 1).map(_.geometry).map(_.boundary).run)
 
-    (users.ddl ++ projects.ddl).drop
+    println(Users.save(john.copy(name = "Jon Doe")))
+
+    (Users.ddl ++ Projects.ddl).drop
   }
 }

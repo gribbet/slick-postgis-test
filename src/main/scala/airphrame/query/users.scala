@@ -1,6 +1,6 @@
 package airphrame.query
 
 import airphrame.model.User
-import airphrame.table.Users
+import airphrame.table.UserTable
 
-object users extends ModelTableQuery[User, Users](new Users(_))
+object Users extends ModelTableQuery[User, UserTable](new UserTable(_))

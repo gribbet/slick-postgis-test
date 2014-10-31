@@ -12,6 +12,6 @@ object Test extends Build {
       ),
       libraryDependencies ++= Seq(
         "com.typesafe.slick" %% "slick" % "2.1.0" withSources() withJavadoc(),
-        "com.h2database" % "h2" % "1.3.170" withSources() withJavadoc(),
-        "com.azavea.geotrellis" %% "geoslick" % "0.1.0-SNAPSHOT" withSources() withJavadoc()))
+        "com.github.tminglei" %% "slick-pg_jts" % "0.6.5.2" withSources() withJavadoc() exclude("org.postgresql", "postgresql"),
+        "postgresql" % "postgresql" % "9.1-901.jdbc4" withSources() withJavadoc()))
 }

@@ -1,9 +1,9 @@
 package airphrame.query
 
 import airphrame.model.Model
+import airphrame.slick.Driver.simple._
 import airphrame.table.ModelTable
 
-import scala.slick.driver.PostgresDriver.simple._
 import scala.slick.jdbc.JdbcBackend
 import scala.slick.lifted.{TableQuery, Tag}
 

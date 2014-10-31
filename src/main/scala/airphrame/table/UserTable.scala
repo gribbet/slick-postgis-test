@@ -1,11 +1,11 @@
 package airphrame.table
 
 import airphrame.model.User
+import airphrame.slick.Driver.simple._
 
-import scala.slick.driver.PostgresDriver.simple._
 import scala.slick.lifted.Tag
 
-class Users(tag: Tag) extends ModelTable[User](tag, "user") {
+class UserTable(tag: Tag) extends ModelTable[User](tag, "user") {
 
   def name = column[String]("name", O.NotNull)
 
