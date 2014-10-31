@@ -9,5 +9,5 @@ class UserTable(tag: Tag) extends ModelTable[User](tag, "user") {
 
   def name = column[String]("name", O.NotNull)
 
-  def * = (id.?, name) <>(User.tupled, User.unapply)
+  def * = (id.?, createTime, updateTime, name) <>(User.tupled, User.unapply)
 }

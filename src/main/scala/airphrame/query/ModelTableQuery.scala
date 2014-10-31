@@ -24,7 +24,7 @@ abstract class ModelTableQuery[ModelType <: Model[ModelType], ModelTableType <: 
     model.withId(insertAndReturnId(model))
 
   private def update(model: ModelType)(implicit session: JdbcBackend#Session): ModelType = {
-    filter(_.id === model.id).update(model)
+    filter(_.id === model.id).update(model.updated())
     model
   }
 }
