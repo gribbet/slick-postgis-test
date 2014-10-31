@@ -4,13 +4,14 @@ import com.github.nscala_time.time.Imports._
 import com.vividsolutions.jts.geom.MultiPolygon
 
 case class Project(
-  id: Option[Int] = None,
+  id: Option[Long] = None,
+  version: Int = 1,
   createTime: DateTime = DateTime.now,
   updateTime: DateTime = DateTime.now,
-  userId: Option[Int] = None,
+  userId: Option[Long] = None,
   geometry: MultiPolygon) extends Model[Project] {
 
-  def withId(id: Int) = copy(id = Some(id))
+  def withId(id: Long) = copy(id = Some(id))
 
-  def updated() = copy(updateTime = DateTime.now)
+  def updated() = copy(version = version + 1, updateTime = DateTime.now)
 }

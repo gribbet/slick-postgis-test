@@ -30,9 +30,12 @@ object Main extends App {
     val project = Projects.save(Project(userId = john.id, geometry = geometry))
     println(project)
 
-    println(Projects.filter(_.id === 1).map(_.geometry).map(_.boundary).run)
+    println(Projects.filter(_.id === 1l).map(_.geometry).map(_.boundary).run)
+
+    println(john)
 
     println(Users.save(john.copy(name = "Jon Doe")))
+    println(Users.save(john.copy(name = "Jon Doe 2")))
 
     (Users.ddl ++ Projects.ddl).drop
   }
