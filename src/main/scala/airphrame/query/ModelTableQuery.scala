@@ -3,7 +3,7 @@ package airphrame.query
 import airphrame.model.Model
 import airphrame.table.ModelTable
 
-import scala.slick.driver.H2Driver.simple._
+import scala.slick.driver.PostgresDriver.simple._
 import scala.slick.jdbc.JdbcBackend
 import scala.slick.lifted.{TableQuery, Tag}
 

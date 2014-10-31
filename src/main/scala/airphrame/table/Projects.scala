@@ -3,7 +3,7 @@ package airphrame.table
 import airphrame.model.Project
 import airphrame.query.users
 
-import scala.slick.driver.H2Driver.simple._
+import scala.slick.driver.PostgresDriver.simple._
 import scala.slick.lifted.Tag
 
 class Projects(tag: Tag) extends ModelTable[Project](tag, "project") {
