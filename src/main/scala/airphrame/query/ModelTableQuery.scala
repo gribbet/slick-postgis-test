@@ -28,7 +28,7 @@ abstract class ModelTableQuery[ModelType <: Model[ModelType], ModelTableType <: 
     filter(_.id === model.id)
       .filter(_.version === model.version)
       .update(updated) match {
-      case 0 => throw NotFoundException()
+      case 0 => throw OptimisticLockException()
       case _ => updated
     }
   }

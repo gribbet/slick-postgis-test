@@ -2,9 +2,9 @@ package airphrame.table
 
 import airphrame.model.Project
 import airphrame.query.Users
+import airphrame.slick.Driver.simple._
 import com.vividsolutions.jts.geom.MultiPolygon
 
-import airphrame.slick.Driver.simple._
 import scala.slick.lifted.Tag
 
 

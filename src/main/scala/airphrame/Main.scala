@@ -1,14 +1,16 @@
 package airphrame
 
 import airphrame.model.{Project, User}
-import airphrame.query.{Projects, Users}
+import airphrame.query.{OptimisticLockException, Projects, Users}
 import airphrame.slick.Driver.simple._
 import com.vividsolutions.jts.geom._
 import com.vividsolutions.jts.geom.impl.CoordinateArraySequence
 
+import scala.util.control.Exception._
+
 object Main extends App {
   lazy val db = Database.forURL(
-    url = "jdbc:postgresql://test.c7ssmrrxqzim.us-west-1.rds.amazonaws.com:5432",
+    url = "jdbc:postgresql://test.c7ssmrrxqzim.us-west-1.rds.amazonaws.com:5432/test",
     user = "test",
     password = "testtest",
     driver = "org.postgresql.Driver")
@@ -28,14 +30,17 @@ object Main extends App {
             new Coordinate(-122.3, 37.0))), factory),
         Array[LinearRing](), factory)), factory)
     val project = Projects.save(Project(userId = john.id, geometry = geometry))
-    println(project)
 
-    println(Projects.filter(_.id === 1l).map(_.geometry).map(_.boundary).run)
+    Projects.map(_.geometry).map(_.boundary).firstOption.map(println(_))
+
+    Projects.map(_.geometry).map(_.asGeoJSON()).firstOption.map(println(_))
 
     println(john)
 
     println(Users.save(john.copy(name = "Jon Doe")))
-    println(Users.save(john.copy(name = "Jon Doe 2")))
+
+    catching(classOf[OptimisticLockException]) withTry
+      Users.save(john.copy(name = "Jon Doe 2"))
 
     (Users.ddl ++ Projects.ddl).drop
   }
